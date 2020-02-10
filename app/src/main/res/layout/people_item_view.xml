@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+       <ImageView
+            android:layout_alignParentStart="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+           android:layout_marginTop="5dp"
+           android:layout_marginBottom="5dp"
+           android:layout_marginEnd="15dp"
+           android:src="@mipmap/ic_launcher"
+            android:id="@+id/p_item_image"/>
+
+        <TextView
+            android:layout_toEndOf="@id/p_item_image"
+            android:layout_toStartOf="@id/p_item_edit"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/p_item_name"/>
+       <ImageView
+           android:layout_alignParentEnd="true"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+           android:layout_marginTop="5dp"
+           android:layout_marginBottom="5dp"
+           android:src="@drawable/ic_edit_icon"
+           android:padding="15dp"
+            android:id="@+id/p_item_edit"/>
+
+
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

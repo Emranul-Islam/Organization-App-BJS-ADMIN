@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Admin - BJS</string>
+    <string name="send_notice">নোটিশ পাঠান</string>
+    <string name="edit_peapole">সদস্যের তথ্য পরিবর্তন করুন</string>
+    <string name="add_peapole">নতুন সদস্য যোগকরুন</string>
+    <string name="notice_sender">প্রেরকের নাম</string>
+    <string name="mHint">এখানে নোটীশ লিখুন। চেষ্টা করবেন সম্পূর্ন বাংলা লিখার</string>
+</resources>

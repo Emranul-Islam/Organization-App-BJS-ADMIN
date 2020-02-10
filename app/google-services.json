@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "324838463505",
+    "firebase_url": "https://biteshwor-jubo-somaj.firebaseio.com",
+    "project_id": "biteshwor-jubo-somaj",
+    "storage_bucket": "biteshwor-jubo-somaj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324838463505:android:c6a336155bc64a9f3d79b0",
+        "android_client_info": {
+          "package_name": "com.muhammad_sohag.admin_bjs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324838463505-7fok4fdkp2mtm0t2dlbq6puhl215816m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.muhammad_sohag.admin_bjs",
+            "certificate_hash": "2f2c2f0e56465ab3919fea5579a1a6b485b09a67"
+          }
+        },
+        {
+          "client_id": "324838463505-l4vbdsdl854gsaepavntjirjh7eiftmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzqzRK6xBEVliaEOy8eubH854lFaTxzj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324838463505-l4vbdsdl854gsaepavntjirjh7eiftmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
