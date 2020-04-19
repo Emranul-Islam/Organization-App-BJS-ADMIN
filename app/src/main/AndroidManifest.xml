@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UpdateActivity"></activity>
+        <activity android:name=".UpdateData"></activity>
         <activity android:name=".AddPeople" />
         <activity android:name=".People" />
         <activity android:name=".SendNotice" />

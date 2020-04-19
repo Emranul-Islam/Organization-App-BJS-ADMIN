@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.muhammad_sohag.admin_bjs.UpdateActivity;
+import com.muhammad_sohag.admin_bjs.UpdateData;
 import com.muhammad_sohag.admin_bjs.model.PeopleModel;
 import com.muhammad_sohag.admin_bjs.R;
 
@@ -59,7 +59,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 //Sending ID
-                Intent editInten = new Intent(context, UpdateActivity.class);
+                Intent editInten = new Intent(context, UpdateData.class);
                 editInten.putExtra("uid",modelList.get(position).getUid());
                 context.startActivity(editInten);
                 Toast.makeText(context, "Edit Option Clicked  " + position, Toast.LENGTH_SHORT).show();
