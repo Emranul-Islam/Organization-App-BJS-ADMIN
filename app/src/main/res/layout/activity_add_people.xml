@@ -1,127 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".AddPeople">
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
-        android:id="@+id/photo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_launcher_background" />
-
-    <EditText
-        android:id="@+id/index_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:hint="Index Number" />
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:hint="Name" />
-
-    <EditText
-        android:id="@+id/phone_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:hint="Phone Number" />
-
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@color/colorAccent"
-        android:elevation="5dp"
-        android:onClick="saveInfo"
-        android:text="Save Info"
-        android:textColor="@color/colorWhite"
-        android:textSize="20sp" />
-
-<!--    <Button-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:id="@+id/photo_btn"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="20dp"-->
-<!--        android:background="@color/colorCard2"-->
-<!--        android:elevation="5dp"-->
-<!--        android:onClick="savePhoto"-->
-<!--        android:text="Save Photo"-->
-<!--        android:textColor="@color/colorWhite"-->
-<!--        android:textSize="20sp" />-->
-
-<!--    <Button-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:id="@+id/confirmBtn"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="20dp"-->
-<!--        android:background="@color/colorRed"-->
-<!--        android:elevation="5dp"-->
-<!--        android:onClick="Confirm"-->
-<!--        android:text="Confirm ?"-->
-<!--        android:textColor="@color/colorWhite"-->
-<!--        android:textSize="20sp" />-->
-
-
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="30dp"
-        android:background="@color/colorGreen"
-        android:id="@+id/linear_layout_complet"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="30sp"
-            android:textAlignment="center"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/colorWhite"
-            android:text="সদস্য বানানো সফল হয়েছে :)"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="20sp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/photo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorBlack"
-            android:text="সদস্য বানানো সফল হয়েছে :)"/>
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/ic_launcher_background"
+            android:visibility="gone"/>
 
-            <ImageButton
-                android:layout_marginTop="20dp"
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="ইউজার নাম(ইংরেজিতে)" />
+
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="নাম (বাংলায়)" />
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="পাসওয়ার্ড (ইংরেজিতে)" />
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="মোবাইল নাম্বার (ইংরেজিতে)" />
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/phone_number2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="মোবাইল নাম্বার 2 (ইংরেজিতে)" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="39dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="5dp"
+                android:text="রক্তের গ্রুপ: "
+                android:textColor="@color/colorRed"
+                android:textSize="23sp" />
+
+            <Spinner
+                android:id="@+id/blood_group"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/icon_home"
-                android:background="@color/colorRed"
-                android:scaleType="fitXY"
-                android:onClick="Complete"/>
+                android:textAlignment="center" />
 
+        </LinearLayout>
 
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@color/colorAccent"
+            android:elevation="5dp"
+            android:text="Save Info"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
     </LinearLayout>
 
-</LinearLayout>
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:elevation="2dp"
+        android:id="@+id/progress_circular"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+
+
+</RelativeLayout>

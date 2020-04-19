@@ -11,16 +11,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"
         android:id="@+id/up_photo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_launcher_background" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Index Number"
-        android:id="@+id/up_index_number" />
+        android:src="@color/colorCard"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -33,6 +27,45 @@
         android:layout_height="wrap_content"
         android:hint="Phone Number"
         android:id="@+id/up_phone_number" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number 2"
+        android:id="@+id/up_phone_number2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="5dp"
+            android:text="রক্তের গ্রুপ: "
+            android:textColor="@color/colorRed"
+            android:textSize="23sp" />
+        <TextView
+            android:id="@+id/up_blood"
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="5dp"
+            android:text=""
+            android:textColor="@color/colorBlack"
+            android:textSize="23sp" />
+
+        <Spinner
+            android:id="@+id/up_blood_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center" />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"

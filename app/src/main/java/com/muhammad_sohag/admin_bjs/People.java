@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.muhammad_sohag.admin_bjs.adapter.PeopleAdapter;
+import com.muhammad_sohag.admin_bjs.model.PeopleModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,27 +41,26 @@ public class People extends AppCompatActivity {
         final PeopleAdapter peopleAdapter = new PeopleAdapter(this, values);
         peopleRecyclerView.setAdapter(peopleAdapter);
 
-        //todo:  INDEX NAMES NUMBER ID URL Sodesso_List
 
 
-        databaseRaf.orderBy("INDEX").addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+
+        databaseRaf.orderBy("name").addSnapshotListener(this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e != null){
-                    Toast.makeText(People.this, "Somthing is Wronng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(People.this, "Something is Wrong", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (queryDocumentSnapshots != null) {
                     for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                        values.add(new PeopleModel(documentSnapshot.getString("URL"),documentSnapshot.getString("NAMES"),
-                                documentSnapshot.getString("ID"),documentSnapshot.getString("NUMBER")));
+                        PeopleModel peopleModel = documentSnapshot.toObject(PeopleModel.class);
+                        values.add(peopleModel);
                     }
                     peopleAdapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);
                 }
             }
         });
-        values.add(new PeopleModel("image", "Name","id","number"));
 
 
 

@@ -24,12 +24,49 @@
         <TextView
             android:layout_toEndOf="@id/p_item_image"
             android:layout_toStartOf="@id/p_item_edit"
-            android:layout_centerVertical="true"
-            android:textSize="15sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Nas;dlkfj sdlfj"
             android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:id="@+id/p_item_name"/>
-       <ImageView
+        <TextView
+            android:layout_margin="3dp"
+            android:layout_toEndOf="@id/p_item_image"
+            android:layout_toStartOf="@id/p_item_edit"
+            android:textSize="15sp"
+            android:layout_below="@id/p_item_name"
+            android:text="user: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/p_item_email"/>
+
+        <TextView
+            android:layout_margin="3dp"
+            android:layout_toEndOf="@id/p_item_image"
+            android:layout_toStartOf="@id/p_item_edit"
+            android:textSize="15sp"
+            android:layout_below="@id/p_item_email"
+            android:text="pass: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/p_item_pass"/>
+
+        <TextView
+            android:layout_margin="3dp"
+            android:layout_toEndOf="@id/p_item_image"
+            android:layout_toStartOf="@id/p_item_edit"
+            android:textSize="15sp"
+            android:layout_below="@id/p_item_pass"
+            android:text="Phone: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/p_item_number"/>
+
+
+
+        <ImageView
            android:layout_alignParentEnd="true"
             android:layout_width="60dp"
             android:layout_height="80dp"

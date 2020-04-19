@@ -1,56 +1,62 @@
 package com.muhammad_sohag.admin_bjs;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddPeople extends AppCompatActivity {
 
+    private static final String TAG = "AddPeople";
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private StorageReference storageReference;
+    private StorageReference storage = FirebaseStorage.getInstance().getReference();
 
-    private EditText indexNumber;
     private CircleImageView photo;
-    private EditText name;
-    private EditText phone_number;
+    private EditText name, phone_number, phone_number2, password, email;
+
     private ProgressBar progressBar;
     private Button btn;
-    private String peopleId = null;
+    private Spinner bloodGroupSpinner;
+    private String[] bloodGroups;
     private Uri photoUri = null;
-    private Uri downloadUri = null;
-    private LinearLayout linearLayoutComplet;
-
-    private HashMap<String, Object> values;
 
 
     @Override
@@ -58,13 +64,15 @@ public class AddPeople extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_people);
 
-        storageReference = FirebaseStorage.getInstance().getReference();
-        indexNumber = findViewById(R.id.index_number);
+        bloodGroupSpinner = findViewById(R.id.blood_group);
+        bloodGroups = getResources().getStringArray(R.array.blood_group);
+        email = findViewById(R.id.email);
         photo = findViewById(R.id.photo);
         name = findViewById(R.id.name);
         phone_number = findViewById(R.id.phone_number);
-        linearLayoutComplet = findViewById(R.id.linear_layout_complet);
-        linearLayoutComplet.setVisibility(View.GONE);
+        phone_number2 = findViewById(R.id.phone_number2);
+        password = findViewById(R.id.password);
+
 
         progressBar = findViewById(R.id.progress_circular);
 
@@ -73,7 +81,6 @@ public class AddPeople extends AppCompatActivity {
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                     if (ContextCompat.checkSelfPermission(AddPeople.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -88,11 +95,18 @@ public class AddPeople extends AppCompatActivity {
                 } else {
                     cropImage();
                 }
-
             }
         });
 
+        ArrayAdapter<String> bloodAdapter = new ArrayAdapter<String>(this, R.layout.blood_group_layout, R.id.blood_group_layout_text, bloodGroups);
+        bloodGroupSpinner.setAdapter(bloodAdapter);
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveInfo();
+            }
+        });
     }
 
     private void cropImage() {
@@ -102,175 +116,154 @@ public class AddPeople extends AppCompatActivity {
                 .start(AddPeople.this);
     }
 
-    public void saveInfo(final View view) {
-        btn.setText("Saveing Info...");
-        btn.setClickable(false);
+    public void saveInfo() {
+//photoUri != null &&
+        if (!TextUtils.isEmpty(email.getText()) && !TextUtils.isEmpty(name.getText()) && !TextUtils.isEmpty(phone_number.getText()) && !TextUtils.isEmpty(password.getText())) {
+            btn.setText("Saveing Info...");
+            btn.setClickable(false);
+            progressBar.setVisibility(View.VISIBLE);
+            final String emailValue = email.getText().toString().toLowerCase() + "@bijos.com";
 
+            Log.d(TAG, "saveInfo: " + emailValue);
 
-        progressBar.setVisibility(View.VISIBLE);
-        String indexValue = indexNumber.getText().toString();
+            final String passwordValue = password.getText().toString();
+            final String passwordValue2 = password.getText().toString();
+
+            auth.createUserWithEmailAndPassword(emailValue, passwordValue)
+                    .addOnCompleteListener(AddPeople.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isComplete()) {
+                                final String uid = task.getResult().getUser().getUid();
+                                Log.d(TAG, "onComplete UID: " + uid);
+                                Toast.makeText(AddPeople.this, "Id Created", Toast.LENGTH_SHORT).show();
+                                //  final StorageReference storageRef = storage.child("profile_image").child(uid + ".jpeg");
+                                uploadData(emailValue, passwordValue, uid, null, null);
+
+                            } else {
+                                progressBar.setVisibility(View.GONE);
+                                Log.d(TAG, "onComplete: " + task.getException().getMessage());
+                                Toast.makeText(AddPeople.this, "2 " + task.getException(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "আগে সব গুলা পুরন করুন", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void uploadData(String emailValue, String passwordValue, final String uid, String downloadUrl, final StorageReference sRef) {
+
         String nameValue = name.getText().toString();
         String phoneValue = phone_number.getText().toString();
+        String phoneValue2 = phone_number2.getText().toString();
+        String blood = bloodGroupSpinner.getSelectedItem().toString();
 
-        //todo:  INDEX NAMES NUMBER ID URL
-        values = new HashMap<>();
-        values.put("INDEX", indexValue);
-        values.put("NAMES", nameValue);
-        values.put("NUMBER", phoneValue);
-        values.put("ID", "");
-        values.put("URL", "");
-
-        database.collection("Sodesso_List").add(values)
-                .addOnSuccessListener(this, new OnSuccessListener<DocumentReference>() {
+        //todo:  email name number password blood uid url
+        HashMap<String, Object> values = new HashMap<>();
+        values.put("email", emailValue);
+        values.put("name", nameValue);
+        values.put("number", phoneValue);
+        values.put("number2", phoneValue2);
+        values.put("password", passwordValue);
+        values.put("blood", blood);
+        values.put("uid", uid);
+        values.put("url", downloadUrl);
+        DocumentReference dRef = database.collection("Sodesso_List").document(uid);
+        dRef.set(values)
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        peopleId = documentReference.getId();
-                        indexNumber.setVisibility(View.GONE);
-                        name.setVisibility(View.GONE);
-                        phone_number.setVisibility(View.GONE);
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(AddPeople.this, "Data Added", Toast.LENGTH_SHORT).show();
 
-                        btn.setVisibility(View.GONE);
 
-                        //Saving photo on database
-                        if (photoUri != null && peopleId != null) {
-                            final StorageReference image_path = storageReference.child("Profile_Images").child(peopleId + ".jpeg");
-                            image_path.putFile(photoUri)
-                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            image_path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                @Override
-                                                public void onSuccess(Uri uri) {
-                                                    downloadUri = uri;
-                                                    Toast.makeText(AddPeople.this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
 
-                                                    //Updating values............
-                                                    if (downloadUri != null) {
-                                                        Map<String, Object> newValues = new HashMap<>();
-                                                        newValues.put("ID", peopleId);
-                                                        newValues.put("URL", downloadUri.toString());
-                                                        progressBar.setVisibility(View.VISIBLE);
-                                                        DocumentReference documentReference = database.collection("Sodesso_List").document(peopleId);
-                                                        documentReference.update(newValues)
-                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                    @Override
-                                                                    public void onSuccess(Void aVoid) {
-                                                                        Toast.makeText(AddPeople.this, "EveryTHing Fine", Toast.LENGTH_SHORT).show();
-                                                                        progressBar.setVisibility(View.GONE);
-                                                                        photo.setVisibility(View.GONE);
-
-                                                                        linearLayoutComplet.setVisibility(View.VISIBLE);
-                                                                    }
-                                                                })
-                                                                .addOnFailureListener(new OnFailureListener() {
-                                                                    @Override
-                                                                    public void onFailure(@NonNull Exception e) {
-
-                                                                    }
-                                                                });
-                                                    } else {
-                                                        Toast.makeText(AddPeople.this, "Somthing is Wrong", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-
-                                        }
-                                    });
                         } else {
-                            Toast.makeText(AddPeople.this, "Photo Select Koron", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddPeople.this, "last" + task.getException(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddPeople.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
-                        btn.setClickable(true);
-                        btn.setText("Try again to save");
+                        Objects.requireNonNull(auth.getCurrentUser()).delete();
+                        //sRef.delete();
+                        Log.d(TAG, "onFailure: " + e.getMessage());
+                        Toast.makeText(AddPeople.this, "Somossa ache", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-            String name = "Rashed Jailla";
-            String gfName = "Resheder DJ";
-            String valobasa= name+gfName;
     }
 
-////    public void savePhoto(View view) {
-////        if (photoUri != null) {
-////            photoBtn.setClickable(false);
-////            progressBar.setVisibility(View.VISIBLE);
-////            final StorageReference image_path = storageReference.child("Profile_Images").child(peopleId + ".jpeg");
-////            image_path.putFile(photoUri)
-////                    .addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
-////                        @Override
-////                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-////                            image_path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-////                                @Override
-////                                public void onSuccess(Uri uri) {
-////                                    downloadUri = uri;
-////                                    Toast.makeText(AddPeople.this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
-////                                    confirmBtn.setVisibility(View.VISIBLE);
-////                                    progressBar.setVisibility(View.GONE);
-////                                    photoBtn.setVisibility(View.GONE);
-////                                    photo.setVisibility(View.GONE);
-////
-////                                }
-////                            });
-////                        }
-////                    })
-////                    .addOnFailureListener(this, new OnFailureListener() {
-////                        @Override
-////                        public void onFailure(@NonNull Exception e) {
-////
-////                        }
-////                    });
-////        } else {
-////            Toast.makeText(this, "Photo Select Koron", Toast.LENGTH_SHORT).show();
-////        }
+//    private void uploadPhoto(final String uid) {
+//        final StorageReference image_path = storage.child("Profile_Images").child(uid + ".jpeg");
+//        image_path.putFile(photoUri)
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        image_path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                            @Override
+//                            public void onSuccess(Uri uri) {
+//                                Toast.makeText(AddPeople.this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+//
+//                                //Updating values............
+//                                if (uri != null) {
+//                                    Map<String, Object> newValues = new HashMap<>();
+//                                    newValues.put("url", uri.toString());
+//                                    DocumentReference documentReference = database.collection("Sodesso_List").document(uid);
+//                                    documentReference.update(newValues)
+//                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                @Override
+//                                                public void onSuccess(Void aVoid) {
+//                                                    Toast.makeText(AddPeople.this, "EveryTHing Fine", Toast.LENGTH_SHORT).show();
+//                                                    progressBar.setVisibility(View.GONE);
+//                                                    photo.setVisibility(View.GONE);
 //
 //
+//                                                }
+//                                            })
+//                                            .addOnFailureListener(new OnFailureListener() {
+//                                                @Override
+//                                                public void onFailure(@NonNull Exception e) {
+//
+//                                                }
+//                                            });
+//                                } else {
+//                                    Toast.makeText(AddPeople.this, "Somthing is Wrong", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//
+//                    }
+//                });
 //    }
 
-//    public void Confirm(View view) {
-//
-//        if (downloadUri != null) {
-//            confirmBtn.setClickable(false);
-//            Map<String, Object> newValues = new HashMap<>();
-//            newValues.put("ID", peopleId);
-//            newValues.put("URL", downloadUri.toString());
-//            progressBar.setVisibility(View.VISIBLE);
-//            DocumentReference documentReference = database.collection("Sodesso_List").document(peopleId);
-//            documentReference.update(newValues)
-//                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void aVoid) {
-//                            Toast.makeText(AddPeople.this, "EveryTHing Fine", Toast.LENGTH_SHORT).show();
-//                            progressBar.setVisibility(View.GONE);
-//                            confirmBtn.setVisibility(View.GONE);
-//                            linearLayoutComplet.setVisibility(View.VISIBLE);
-//                        }
-//                    })
-//                    .addOnFailureListener(this, new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//
-//                        }
-//                    });
-//        } else {
-//            Toast.makeText(this, "Somthing is Wrong", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
 
-    public void Complete(View view) {
-        finish();
+    //kaj complete hole ei alert dialog ta show korbe:
+    private void alertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddPeople.this);
+        builder.setMessage("People Added Success :)");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FirebaseUser user = auth.getCurrentUser();
+                if (user != null) {
+                    auth.signOut();
+                }
+                finish();
+            }
+        });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

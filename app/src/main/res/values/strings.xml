@@ -5,4 +5,18 @@
     <string name="add_peapole">নতুন সদস্য যোগকরুন</string>
     <string name="notice_sender">প্রেরকের নাম</string>
     <string name="mHint">এখানে নোটীশ লিখুন। চেষ্টা করবেন সম্পূর্ন বাংলা লিখার</string>
+
+    <string name="mail">@bijos.com</string>
+
+    <string-array name="blood_group">
+
+        <item>O+</item>
+        <item>O-</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>B+</item>
+        <item>B-</item>
+    </string-array>
 </resources>
