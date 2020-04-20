@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UpdateData"></activity>
+        <activity android:name=".blood.BloodBank"></activity>
+        <activity android:name=".blood.BloodMemberAdd" />
+        <activity android:name=".UpdateData" />
         <activity android:name=".AddPeople" />
         <activity android:name=".People" />
         <activity android:name=".SendNotice" />

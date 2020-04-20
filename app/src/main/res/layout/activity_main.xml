@@ -143,4 +143,10 @@
 
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Blood Bank"
+        android:onClick="blood"/>
+
 </LinearLayout>

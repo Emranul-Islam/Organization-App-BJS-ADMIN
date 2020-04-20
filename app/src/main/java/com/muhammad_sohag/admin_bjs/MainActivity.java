@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.muhammad_sohag.admin_bjs.blood.BloodBank;
+import com.muhammad_sohag.admin_bjs.blood.BloodMemberAdd;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sNotice(View view) {
-        Intent notice = new Intent(MainActivity.this, SendNotice.class);
+        Intent notice = new Intent(MainActivity.this, BloodMemberAdd.class);
         startActivity(notice);
 
     }
@@ -50,5 +53,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Have", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void blood(View view) {
+        Intent intent = new Intent(this, BloodBank.class);
+        startActivity(intent);
     }
 }
