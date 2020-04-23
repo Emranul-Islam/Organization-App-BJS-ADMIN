@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ChadaShow">
+
+    <TextView
+        android:id="@+id/c_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:elevation="3dp"
+        android:text="asdf;jl sfjsl"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_horizontal"
+                android:onClick="refresh"
+                android:id="@+id/c_refresh_btn"
+                android:text="Refresh"
+                android:textAllCaps="false"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_below="@+id/c_refresh_btn"
+                android:id="@+id/c_show"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.muhammad_sohag.admin_bjs.Chada;
 import com.muhammad_sohag.admin_bjs.UpdateData;
 import com.muhammad_sohag.admin_bjs.model.PeopleModel;
 import com.muhammad_sohag.admin_bjs.R;
@@ -67,6 +68,16 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Sending ID
+                Intent addChada = new Intent(context, Chada.class);
+                addChada.putExtra("uid",modelList.get(position).getUid());
+                addChada.putExtra("name",modelList.get(position).getName());
+                context.startActivity(addChada);
+            }
+        });
 
     }
 

@@ -23,23 +23,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void sNotice(View view) {
-        Intent notice = new Intent(MainActivity.this, BloodMemberAdd.class);
-        startActivity(notice);
 
-    }
 
-    public void ePeople(View view) {
-        Intent editIntent = new Intent(this, People.class);
-        startActivity(editIntent);
-
-    }
-
-    public void addPeople(View view) {
-        Intent addIntent = new Intent(this, AddPeople.class);
-        startActivity(addIntent);
-
-    }
 
     @Override
     protected void onStart() {
@@ -55,8 +40,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void blood(View view) {
+
+
+    public void notification(View view) {
+        Intent notice = new Intent(MainActivity.this, SendNotice.class);
+        startActivity(notice);
+    }
+
+    public void bloodMember(View view) {
         Intent intent = new Intent(this, BloodBank.class);
+        startActivity(intent);
+    }
+
+    public void sodesso(View view) {
+        Intent intent = new Intent(this, People.class);
+        startActivity(intent);
+    }
+
+    public void addSodesso(View view) {
+        Intent intent = new Intent(this, AddPeople.class);
+        startActivity(intent);
+    }
+
+    public void addBloodMember(View view) {
+        Intent intent = new Intent(this, BloodMemberAdd.class);
         startActivity(intent);
     }
 }

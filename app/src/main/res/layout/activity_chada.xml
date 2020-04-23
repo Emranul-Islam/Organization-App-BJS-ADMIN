@@ -31,10 +31,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:inputType="number"
         android:hint="ক্রমিক নং:" />
 
     <EditText
-        android:id="@+id/c_prerok_name"
+        android:id="@+id/c_grahok_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -45,8 +46,21 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Add Chada"
+        android:text="সংরক্ষন করুন"
         android:textAllCaps="false"
         android:textSize="20dp" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/c_progress"
+        android:visibility="gone"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="রশিদ গুলা দেখুন"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/c_show_detalis"/>
 
 </LinearLayout>
