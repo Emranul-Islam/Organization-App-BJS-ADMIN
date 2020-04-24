@@ -1,12 +1,12 @@
 package com.muhammad_sohag.admin_bjs.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,11 +38,16 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
         holder.nameTV.setText(bloodModelList.get(position).getName());
         holder.numberTV.setText(bloodModelList.get(position).getNumber());
         holder.bloodTV.setText(bloodModelList.get(position).getBlood());
+        holder.thikanaTV.setText(bloodModelList.get(position).getThikana());
 
         holder.editIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Edit: "+bloodModelList.get(position).getId(), Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, BloodUpdate.class);
+                intent.putExtra("id", bloodModelList.get(position).getId());
+                context.startActivity(intent);
+
             }
         });
 
@@ -55,7 +60,7 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView nameTV,numberTV,bloodTV;
+        private TextView nameTV,numberTV,bloodTV,thikanaTV;
         private ImageView editIV;
 
         ViewHolder(@NonNull View itemView) {
@@ -64,6 +69,7 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
             numberTV = itemView.findViewById(R.id.bgi_number);
             bloodTV = itemView.findViewById(R.id.bgi_bg);
             editIV = itemView.findViewById(R.id.bgi_edit);
+            thikanaTV = itemView.findViewById(R.id.bgi_thikana);
         }
     }
 }

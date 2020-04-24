@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ChadaShow"></activity>
+        <activity android:name=".BloodUpdate"></activity>
+        <activity android:name=".ChadaShow" />
         <activity android:name=".blood.BloodBank" />
         <activity android:name=".blood.BloodMemberAdd" />
         <activity android:name=".UpdateData" />

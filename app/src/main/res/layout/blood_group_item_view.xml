@@ -11,13 +11,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="2dp"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_alignParentStart="true"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
             android:layout_marginBottom="5dp"
             android:layout_marginEnd="15dp"
             android:src="@mipmap/ic_launcher"
@@ -43,13 +43,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bgi_number"/>
-
         <TextView
             android:layout_margin="3dp"
             android:layout_toEndOf="@id/bgi_image"
             android:layout_toStartOf="@id/bgi_edit"
             android:textSize="15sp"
             android:layout_below="@id/bgi_number"
+            android:text="user: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bgi_thikana"/>
+
+        <TextView
+            android:layout_margin="3dp"
+            android:layout_toEndOf="@id/bgi_image"
+            android:layout_toStartOf="@id/bgi_edit"
+            android:textSize="15sp"
+            android:layout_below="@id/bgi_thikana"
             android:text="pass: "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
