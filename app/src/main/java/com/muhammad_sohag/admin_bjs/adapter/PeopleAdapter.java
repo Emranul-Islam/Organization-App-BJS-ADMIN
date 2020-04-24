@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.muhammad_sohag.admin_bjs.Chada;
+import com.muhammad_sohag.admin_bjs.R;
 import com.muhammad_sohag.admin_bjs.UpdateData;
 import com.muhammad_sohag.admin_bjs.model.PeopleModel;
-import com.muhammad_sohag.admin_bjs.R;
 
 import java.util.List;
 
@@ -55,13 +55,12 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
                 .into(holder.photo);
 
 
-
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Sending ID
                 Intent editInten = new Intent(context, UpdateData.class);
-                editInten.putExtra("uid",modelList.get(position).getUid());
+                editInten.putExtra("uid", modelList.get(position).getUid());
                 context.startActivity(editInten);
                 Toast.makeText(context, "Edit Option Clicked  " + position, Toast.LENGTH_SHORT).show();
 
@@ -73,8 +72,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             public void onClick(View v) {
                 //Sending ID
                 Intent addChada = new Intent(context, Chada.class);
-                addChada.putExtra("uid",modelList.get(position).getUid());
-                addChada.putExtra("name",modelList.get(position).getName());
+                addChada.putExtra("uid", modelList.get(position).getUid());
+                addChada.putExtra("name", modelList.get(position).getName());
                 context.startActivity(addChada);
             }
         });
@@ -89,7 +88,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView photo;
         private ImageView edit;
-        private TextView name,email,password, number;
+        private TextView name, email, password, number;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

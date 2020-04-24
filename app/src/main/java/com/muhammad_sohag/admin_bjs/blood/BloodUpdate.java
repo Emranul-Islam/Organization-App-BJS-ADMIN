@@ -1,4 +1,4 @@
-package com.muhammad_sohag.admin_bjs;
+package com.muhammad_sohag.admin_bjs.blood;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.muhammad_sohag.admin_bjs.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -102,13 +103,15 @@ public class BloodUpdate extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("সত্যি কি ডিলেট করে দিবেন?")
                 .setMessage("তথ্য কেটে ফেললে আর ফিরে পাওয়া যাবে না")
-                .setNegativeButton("না",null)
+                .setNegativeButton("না", null)
                 .setPositiveButton("হ্যা", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        dataRef.delete();
                         Toast.makeText(BloodUpdate.this, "তথ্য মুছে ফেলা হয়েছে !", Toast.LENGTH_LONG).show();
                         finish();
                     }
-                });
+                })
+                .show();
     }
 }
