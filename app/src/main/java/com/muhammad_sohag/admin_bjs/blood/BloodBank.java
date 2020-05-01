@@ -35,6 +35,7 @@ public class BloodBank extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_bank);
 
+        getSupportActionBar().setTitle("রক্তদাতাগন");
         recyclerView = findViewById(R.id.b_recycler);
         progressBar = findViewById(R.id.b_progressbar);
 

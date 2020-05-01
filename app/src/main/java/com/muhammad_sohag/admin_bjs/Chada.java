@@ -4,9 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,8 @@ public class Chada extends AppCompatActivity {
     private TextView name;
     private Button cBtn, detailsBtn;
     private ProgressBar progressBar;
+    private Spinner cTakaSpinner;
+    private String[] takaString;
 
     private FirebaseFirestore data = FirebaseFirestore.getInstance();
     private CollectionReference dataBase;
@@ -48,7 +52,10 @@ public class Chada extends AppCompatActivity {
         grahokNameET = findViewById(R.id.c_grahok_name);
         kromikNoET = findViewById(R.id.c_kromik_no);
         progressBar = findViewById(R.id.c_progress);
+        cTakaSpinner = findViewById(R.id.c_taka);
 
+
+        getSupportActionBar().setTitle("চাঁদা");
 
         final String uid = getIntent().getStringExtra("uid");
         String nameExtra = getIntent().getStringExtra("name");
@@ -91,6 +98,11 @@ public class Chada extends AppCompatActivity {
             }
         });
 
+        takaString = getResources().getStringArray(R.array.taka);
+
+        ArrayAdapter<String> takaAdapter = new ArrayAdapter<String>(this, R.layout.blood_group_layout,R.id.blood_group_layout_text, takaString);
+
+        cTakaSpinner.setAdapter(takaAdapter);
 
     }
 
@@ -99,9 +111,10 @@ public class Chada extends AppCompatActivity {
 
         String grahok = grahokNameET.getText().toString();
         String k = kromikNoET.getText().toString();
+        String taka = cTakaSpinner.getSelectedItem().toString();
         String time = String.valueOf(System.currentTimeMillis());
 
-        if (!grahok.isEmpty()){
+        if (!grahok.isEmpty()) {
             if (!k.isEmpty()) {
 
 
@@ -113,6 +126,7 @@ public class Chada extends AppCompatActivity {
                 final Map<String, Object> value = new HashMap<>();
                 value.put("uid", uid);
                 value.put("time", time);
+                value.put("taka", taka);
                 value.put("grahok", grahok);
                 value.put("kromik_no", kromikNo);
 
@@ -120,11 +134,11 @@ public class Chada extends AppCompatActivity {
                 query.addSnapshotListener(Chada.this, new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (queryDocumentSnapshots.isEmpty()){
+                        if (queryDocumentSnapshots.isEmpty()) {
 
                             //Finally upload data Method call:
                             uploadData(value);
-                        }else {
+                        } else {
                             progressBar.setVisibility(View.GONE);
                             cBtn.setClickable(true);
                             kromikNoET.setError("এই ক্রমিক নং এর চাঁদা রশিদ এড করা আছে !");
@@ -132,13 +146,12 @@ public class Chada extends AppCompatActivity {
                     }
                 });
 
-            }else {
+            } else {
                 kromikNoET.setError("ক্রমিক নং না দিলে হবে না !!");
             }
-        }else{
+        } else {
             grahokNameET.setError("গ্রাহকের তথ্য না দিলে হবে না !!");
         }
-
 
 
     }

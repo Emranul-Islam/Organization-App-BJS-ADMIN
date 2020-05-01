@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Admin - BJS</string>
+    <string name="app_name">এডমিন প্যানেল - বিযুস</string>
     <string name="send_notice">নোটিশ পাঠান</string>
     <string name="edit_peapole">সদস্যের তথ্য পরিবর্তন করুন</string>
     <string name="add_peapole">নতুন সদস্য যোগকরুন</string>
@@ -19,5 +19,20 @@
         <item>O+</item>
         <item>O-</item>
         <item>নাই</item>
+    </string-array>
+
+    <string-array name="taka">
+
+        <item>200</item>
+        <item>100</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+        <item>1000</item>
+
     </string-array>
 </resources>

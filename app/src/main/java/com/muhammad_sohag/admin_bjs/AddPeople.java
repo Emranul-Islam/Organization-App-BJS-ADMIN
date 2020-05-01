@@ -44,6 +44,8 @@ public class AddPeople extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_people);
 
+        getSupportActionBar().setTitle("সদস্য যোগ");
+
         bloodGroupSpinner = findViewById(R.id.blood_group);
         bloodGroups = getResources().getStringArray(R.array.blood_group);
         email = findViewById(R.id.email);

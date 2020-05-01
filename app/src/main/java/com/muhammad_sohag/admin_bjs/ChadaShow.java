@@ -62,7 +62,7 @@ public class ChadaShow extends AppCompatActivity {
                         String time = DateFormat.format("dd-MM-yyyy hh:mm aa", cal).toString();
 
                         data.append("ক্রমিক নং: ").append(documentSnapshots.get("kromik_no").toString()).append("\nগ্রাহকের নাম: ")
-                                .append(documentSnapshots.getString("grahok")).append("\nসময়: ").append(time)
+                                .append(documentSnapshots.getString("grahok")).append("\nটাকার পরিমান: ").append(documentSnapshots.getString("taka")).append("\nসময়: ").append(time)
                                 .append("\n --------------------------\n");
 
                     }

@@ -39,6 +39,7 @@ public class SendNotice extends AppCompatActivity {
         massage = findViewById(R.id.s_massage);
         progressBar = findViewById(R.id.sProg);
         sBtn = findViewById(R.id.sBtn);
+        getSupportActionBar().setTitle("নোটিশ");
 
         final Map<String, Object> value = new HashMap<>();
 
@@ -63,7 +64,7 @@ public class SendNotice extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentReference> task) {
 
                         if (task.isSuccessful()) {
-                            Toast.makeText(SendNotice.this, "নোটিশ পাঠানো হয়েছে ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SendNotice.this, "নোটিশ পাঠানো হয়েছে ", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
                             names.setText("");
                             massage.setText("");
