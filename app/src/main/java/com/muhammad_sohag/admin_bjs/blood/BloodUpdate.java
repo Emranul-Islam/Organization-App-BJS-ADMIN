@@ -41,6 +41,10 @@ public class BloodUpdate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_update);
 
+        getSupportActionBar().setTitle("তথ্য এডিট");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         nameET = findViewById(R.id.bu_name);
         numberET = findViewById(R.id.bu_number);
         thikanaET = findViewById(R.id.bu_thikana);

@@ -56,6 +56,8 @@ public class Chada extends AppCompatActivity {
 
 
         getSupportActionBar().setTitle("চাঁদা");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         final String uid = getIntent().getStringExtra("uid");
         String nameExtra = getIntent().getStringExtra("name");

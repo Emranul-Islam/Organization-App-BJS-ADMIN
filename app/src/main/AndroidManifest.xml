@@ -15,15 +15,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".blood.BloodUpdate"/>
-        <activity android:name=".ChadaShow" />
-        <activity android:name=".blood.BloodBank" />
-        <activity android:name=".blood.BloodMemberAdd" />
-        <activity android:name=".UpdateData" />
-        <activity android:name=".AddPeople" />
-        <activity android:name=".Chada" />
-        <activity android:name=".People" />
-        <activity android:name=".SendNotice" />
+        <activity
+            android:name=".blood.BloodUpdate"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ChadaShow"
+            android:parentActivityName=".Chada" />
+        <activity
+            android:name=".blood.BloodBank"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".blood.BloodMemberAdd"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".UpdateData"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AddPeople"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Chada"
+            android:parentActivityName=".People" />
+        <activity
+            android:name=".People"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".SendNotice"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

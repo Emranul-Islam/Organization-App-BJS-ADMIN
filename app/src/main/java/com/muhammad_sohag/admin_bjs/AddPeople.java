@@ -45,6 +45,8 @@ public class AddPeople extends AppCompatActivity {
         setContentView(R.layout.activity_add_people);
 
         getSupportActionBar().setTitle("সদস্য যোগ");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         bloodGroupSpinner = findViewById(R.id.blood_group);
         bloodGroups = getResources().getStringArray(R.array.blood_group);

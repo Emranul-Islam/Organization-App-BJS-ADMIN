@@ -33,6 +33,10 @@ public class ChadaShow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chada_show);
 
+        getSupportActionBar().setTitle("চাঁদার লিস্ট");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         totalTV = findViewById(R.id.c_total);
         chadaDetails = findViewById(R.id.c_show);
         chadaDetails.setText("ডাটা নাই !");

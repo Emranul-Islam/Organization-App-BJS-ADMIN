@@ -33,6 +33,10 @@ public class People extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people);
 
+        getSupportActionBar().setTitle("সসস্য");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         progressBar = findViewById(R.id.progress_circular);
         progressBar.setVisibility(View.VISIBLE);
         peopleRecyclerView = findViewById(R.id.people_recycler_view);

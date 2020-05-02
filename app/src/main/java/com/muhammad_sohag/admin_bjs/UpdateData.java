@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -66,6 +67,10 @@ public class UpdateData extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_data);
+
+        getSupportActionBar().setTitle("সদস্য এডিট");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         progressBar = findViewById(R.id.up_progress_circular);
         progressBar.setVisibility(View.VISIBLE);
@@ -353,11 +358,13 @@ public class UpdateData extends AppCompatActivity {
                     .addOnCompleteListener(this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            imagePath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            imagePath.getDownloadUrl().addOnSuccessListener(UpdateData.this, new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Uri> task) {
-                                    String downloadUrl = task.toString();
-                                    updateData(downloadUrl);
+                                public void onSuccess(Uri uri) {
+                                    if (uri!= null){
+                                        String downloadUrl = String.valueOf(uri);
+                                        updateData(downloadUrl);
+                                    }
                                 }
                             })
                                     .addOnFailureListener(new OnFailureListener() {

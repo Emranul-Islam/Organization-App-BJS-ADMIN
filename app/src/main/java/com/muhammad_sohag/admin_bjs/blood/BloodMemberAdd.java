@@ -51,6 +51,10 @@ public class BloodMemberAdd extends AppCompatActivity {
         progressBar = findViewById(R.id.b_progressbar);
         bGroupStr = getResources().getStringArray(R.array.blood_group);
 
+        getSupportActionBar().setTitle("রক্তদাতা সংযোগ");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         ArrayAdapter<String> bloodAdapter = new ArrayAdapter<String>(this, R.layout.blood_group_layout, R.id.blood_group_layout_text, bGroupStr);
         bloodGroup.setAdapter(bloodAdapter);

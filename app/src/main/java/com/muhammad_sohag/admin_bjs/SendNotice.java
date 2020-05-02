@@ -39,7 +39,10 @@ public class SendNotice extends AppCompatActivity {
         massage = findViewById(R.id.s_massage);
         progressBar = findViewById(R.id.sProg);
         sBtn = findViewById(R.id.sBtn);
+
         getSupportActionBar().setTitle("নোটিশ");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         final Map<String, Object> value = new HashMap<>();
 
