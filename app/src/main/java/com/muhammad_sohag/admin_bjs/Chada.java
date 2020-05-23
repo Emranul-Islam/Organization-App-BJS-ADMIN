@@ -40,6 +40,7 @@ public class Chada extends AppCompatActivity {
 
     private FirebaseFirestore data = FirebaseFirestore.getInstance();
     private CollectionReference dataBase;
+    private CollectionReference chadaDataBase = data.collection("Chada_2020");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,12 +161,13 @@ public class Chada extends AppCompatActivity {
 
 
     //Finally upload data:
-    private void uploadData(Map<String, Object> value) {
+    private void uploadData(final Map<String, Object> value) {
         dataBase.add(value)
                 .addOnCompleteListener(Chada.this, new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
+                            chadaDataBase.add(value);
                             Toast.makeText(Chada.this, "চাঁদার রশিদ সংরক্ষন করা হয়েছে !", Toast.LENGTH_LONG).show();
                             finish();
 
@@ -174,6 +176,7 @@ public class Chada extends AppCompatActivity {
                         }
                     }
                 });
+
     }
 
 
