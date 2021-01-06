@@ -1,9 +1,11 @@
 package com.muhammad_sohag.admin_bjs;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class ChadaShow extends AppCompatActivity {
     private int total;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +44,18 @@ public class ChadaShow extends AppCompatActivity {
         chadaDetails = findViewById(R.id.c_show);
         chadaDetails.setText("ডাটা নাই !");
 
-
         showData();
+
+
+
 
     }
 
     private void showData() {
+        final String chada_year = getIntent().getStringExtra("chada");
         final String uid = getIntent().getStringExtra("uid");
 
-        dataRef = firestore.collection("Sodesso_List").document(uid).collection("Chada_2020");
+        dataRef = firestore.collection("Sodesso_List").document(uid).collection(chada_year);
         dataRef.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -71,11 +77,11 @@ public class ChadaShow extends AppCompatActivity {
 
                     }
 
-                    totalTV.setText("মোট চাঁদা দেয়া হইছে: "+total+" টা,\nবাকি আছে: "+(12-total)+" টা।" );
+                    totalTV.setText(chada_year +" এর \nমোট চাঁদা দেয়া হইছে: "+total+" টা,\nবাকি আছে: "+(12-total)+" টা।" );
 
                     chadaDetails.setText(data.toString());
                 } else {
-                    chadaDetails.setText("ডাটা লোড হচ্ছে না...।");
+                    chadaDetails.setText("ডাটা নেই/লোড হচ্ছে না...।");
                 }
             }
         });

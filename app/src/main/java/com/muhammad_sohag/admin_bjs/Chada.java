@@ -1,9 +1,12 @@
 package com.muhammad_sohag.admin_bjs;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,10 +40,12 @@ public class Chada extends AppCompatActivity {
     private ProgressBar progressBar;
     private Spinner cTakaSpinner;
     private String[] takaString;
+    private Spinner cYearSpinner;
+    private String[] yearString;
 
     private FirebaseFirestore data = FirebaseFirestore.getInstance();
     private CollectionReference dataBase;
-    private CollectionReference chadaDataBase = data.collection("Chada_2020");
+    private CollectionReference chadaDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,7 @@ public class Chada extends AppCompatActivity {
         kromikNoET = findViewById(R.id.c_kromik_no);
         progressBar = findViewById(R.id.c_progress);
         cTakaSpinner = findViewById(R.id.c_taka);
+        cYearSpinner = findViewById(R.id.c_year);
 
 
         getSupportActionBar().setTitle("চাঁদা");
@@ -62,25 +68,61 @@ public class Chada extends AppCompatActivity {
 
         final String uid = getIntent().getStringExtra("uid");
         String nameExtra = getIntent().getStringExtra("name");
+        name.setText(nameExtra);
+
+        takaString = getResources().getStringArray(R.array.taka);
+
+        ArrayAdapter<String> takaAdapter = new ArrayAdapter<String>(this, R.layout.blood_group_layout, R.id.blood_group_layout_text, takaString);
+
+        cTakaSpinner.setAdapter(takaAdapter);
+
+        yearString = getResources().getStringArray(R.array.chada_year);
+
+
+        //chada year facility start:
+
+
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+
+
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(this, R.layout.blood_group_layout, R.id.blood_group_layout_text, yearString);
+
+        cYearSpinner.setAdapter(yearAdapter);
+
+        int intValue = sharedPreferences.getInt("chada", 2);
+        cYearSpinner.setSelection(intValue);
+
+
+        cYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("chada", i);
+                editor.apply();
+                // Toast.makeText(Chada.this, "value: " + i, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         detailsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String s = cYearSpinner.getSelectedItem().toString();
                 Intent intent = new Intent(getApplicationContext(), ChadaShow.class);
                 intent.putExtra("uid", uid);
+                intent.putExtra("chada", s);
                 startActivity(intent);
             }
         });
-
-
-        dataBase = data.collection("Sodesso_List").document(uid).collection("Chada_2020");
-
-
-        name.setText(nameExtra);
-
         cBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(Chada.this);
                 builder.setTitle("আপনি কি সব ঠিক মত দিয়েছেন?")
@@ -101,12 +143,6 @@ public class Chada extends AppCompatActivity {
             }
         });
 
-        takaString = getResources().getStringArray(R.array.taka);
-
-        ArrayAdapter<String> takaAdapter = new ArrayAdapter<String>(this, R.layout.blood_group_layout,R.id.blood_group_layout_text, takaString);
-
-        cTakaSpinner.setAdapter(takaAdapter);
-
     }
 
     //Modifies all data:
@@ -115,7 +151,11 @@ public class Chada extends AppCompatActivity {
         String grahok = grahokNameET.getText().toString();
         String k = kromikNoET.getText().toString();
         String taka = cTakaSpinner.getSelectedItem().toString();
+        String year = cYearSpinner.getSelectedItem().toString();
         String time = String.valueOf(System.currentTimeMillis());
+
+        dataBase = data.collection("Sodesso_List").document(uid).collection(year);
+
 
         if (!grahok.isEmpty()) {
             if (!k.isEmpty()) {
@@ -140,7 +180,7 @@ public class Chada extends AppCompatActivity {
                         if (queryDocumentSnapshots.isEmpty()) {
 
                             //Finally upload data Method call:
-                            uploadData(value);
+                            uploadData(value, year);
                         } else {
                             progressBar.setVisibility(View.GONE);
                             cBtn.setClickable(true);
@@ -161,12 +201,13 @@ public class Chada extends AppCompatActivity {
 
 
     //Finally upload data:
-    private void uploadData(final Map<String, Object> value) {
+    private void uploadData(final Map<String, Object> value, String year) {
         dataBase.add(value)
                 .addOnCompleteListener(Chada.this, new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
+                            chadaDataBase = data.collection(year);
                             chadaDataBase.add(value);
                             Toast.makeText(Chada.this, "চাঁদার রশিদ সংরক্ষন করা হয়েছে !", Toast.LENGTH_LONG).show();
                             finish();
@@ -178,6 +219,8 @@ public class Chada extends AppCompatActivity {
                 });
 
     }
+
+
 
 
 }

@@ -47,6 +47,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"/>
+    <Spinner
+        android:id="@+id/c_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"/>
 
     <Button
         android:id="@+id/c_btn"

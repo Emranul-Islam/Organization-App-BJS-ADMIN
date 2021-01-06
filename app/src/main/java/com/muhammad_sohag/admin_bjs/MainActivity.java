@@ -5,15 +5,26 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.protobuf.Api;
+import com.muhammad_sohag.admin_bjs.api.ApiClint;
+import com.muhammad_sohag.admin_bjs.api.ApiService;
 import com.muhammad_sohag.admin_bjs.blood.BloodBank;
 import com.muhammad_sohag.admin_bjs.blood.BloodMemberAdd;
+
+import static com.muhammad_sohag.admin_bjs.Const.TOPIC;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +34,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setTitle("এডমিন প্যানেল");
+        Log.d("TAG", "onCreate: HI SOHAG");
+
+
+
+
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic("notice").addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("TAG", "onComplete: ");
+                   // Toast.makeText(MainActivity.this, "Success to subscribe", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Error to subscribe", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
 
